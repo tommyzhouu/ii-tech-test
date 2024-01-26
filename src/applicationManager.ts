@@ -12,9 +12,15 @@ export class ApplicationManager {
 
     readonly basePage: BasePage;
 
+	readonly signUp: SignUpPage;
+
+	readonly loginPage: LoginPage;
+
 	constructor(page: Page) {
 		this.page = page;
 		this.basePage = new BasePage(this.page);
 		this.navigateTo = new NavigationPage(this.page);
+		this.loginPage = new LoginPage(this.page);
+		this.signUp = new SignUpPage(this.page);
 	}
 }
