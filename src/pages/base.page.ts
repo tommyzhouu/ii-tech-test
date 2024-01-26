@@ -13,6 +13,18 @@ export class BasePage {
 
 	async verifyFieldToBeVisible(nameOfTheField: string): Promise<void> {
 		await this.assertions.assertThatElementToBeVisible(
+			this.fieldNameLabel(nameOfTheField)
+		);
+	}
+
+	async verifyFieldToBeVisibleWithPlaceholder(nameOfTheField: string): Promise<void> {
+		await this.assertions.assertThatElementToBeVisible(
+			this.fieldNamePlaceholder(nameOfTheField)
+		);
+	}
+
+	async verifyFieldToBeVisibleWithName(nameOfTheField: string): Promise<void> {
+		await this.assertions.assertThatElementToBeVisible(
 			this.fieldName(nameOfTheField)
 		);
 	}
@@ -21,8 +33,26 @@ export class BasePage {
 		await this.page.getByRole('button', { name: `${buttonName}` }).isEnabled();
 		await this.page.getByRole('button', { name: `${buttonName}` }).click();
 	}
+	
+	async clickOnButtonWithLink(buttonName: string) {
+		await this.page.getByRole('link', { name: `${buttonName}` }).isVisible();
+		await this.page.getByRole('link', { name: buttonName }).click();
+	}
+
+	async verifyTextToBeVisible(expectedText: string) {
+		await this.assertions.assertTextToBeVisible(this.page.getByText(expectedText))
+	}
     
-    fieldName(nameOfTheField: string) {
+    fieldNameLabel(nameOfTheField: string) {
 		return this.page.getByLabel(nameOfTheField);
 	}
+
+	fieldNamePlaceholder(nameOfTheField: string) {
+		return this.page.getByPlaceholder(nameOfTheField);
+	}
+
+	fieldName(nameOfTheField: string) {
+		return this.page.locator(`[name=${nameOfTheField}]`);
+	}
+	
 	}

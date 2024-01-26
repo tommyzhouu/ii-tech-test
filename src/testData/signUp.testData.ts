@@ -17,7 +17,7 @@ export async function newUserSignUp(): Promise<testUser> {
 		firstName: generateRandomWord(5),
 		email: generateRandomEmail(),
 		lastName: generateRandomWord(7),
-		address: '15' + generateRandomWord(5) + 'Street',
+		address: '15 ' + generateRandomWord(5) + ' Street',
 		state: generateRandomWord(6),
 		city: generateRandomWord(7),
 		zipCode: '123123',

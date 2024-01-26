@@ -14,5 +14,5 @@ export class NavigationPage extends BasePage {
 		await waitForPageUrl(this.page, `/${url}`);
 	}
 
-	}
+}
 
