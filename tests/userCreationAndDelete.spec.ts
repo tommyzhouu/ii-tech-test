@@ -10,6 +10,13 @@ test('User signs up', async ({ app }) => {
     const newUser =  await newUserSignUp();
     const password = process.env.COMMON_PASSWORD as string;
     const emailAddress = newUser.email;
+
+    //Block ads via route interception
+    await app.page.route("**/*", route => {
+      route.request().url().startsWith("https://googleads.") ?
+        route.abort() : route.continue();
+      return;
+  });
   
     //User navigates to the login page
     await app.navigateTo.homePage();

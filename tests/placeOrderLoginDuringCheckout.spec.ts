@@ -13,10 +13,17 @@ test('User searches for product', async ({ app }) => {
     const emailAddress = newUser.email;
     const address = newUser.address;
 
+    //Block ads via route interception
+    await app.page.route("**/*", route => {
+        route.request().url().startsWith("https://googleads.") ?
+          route.abort() : route.continue();
+        return;
+    });
+
     //User navigates to the login page
     await app.navigateTo.homePage();
     await app.navigateTo.menuName('Signup / Login', 'login');
-    
+
     //User signs up to create new account
     await app.signUp.signup(emailAddress, newUser.firstName);
     await app.signUp.signupForm(password, newUser.firstName, newUser.lastName, newUser.address, newUser.state, newUser.city, newUser.zipCode, newUser.mobileNumber);

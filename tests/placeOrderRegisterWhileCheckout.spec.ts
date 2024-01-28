@@ -12,6 +12,13 @@ test('User searches for product', async ({ app }) => {
     const password = process.env.COMMON_PASSWORD as string;
     const emailAddress = newUser.email;
     const address = newUser.address;
+    
+//Block ads via route interception
+await app.page.route("**/*", route => {
+    route.request().url().startsWith("https://googleads.") ?
+      route.abort() : route.continue();
+    return;
+});
 
 //User navigates to the products page, search for v-neck t-shirt, add to cart, go to checkout
 await app.navigateTo.homePage();
